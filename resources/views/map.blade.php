@@ -255,15 +255,21 @@
             // Style
 
             // onEachFeature
-            onEachFeature: function(feature, layer) {
+            onEachFeature: function (feature, layer) {
+                //Route delete point
+                var routedelete = "{{ route('points.delete', ':id') }}"; routedelete = routedelete.replace(':id', feature.properties.id);
                 // variable popup content
-                var popup_content =
-                    "Nama: " + feature.properties.name + "<br>" +
+                var popup_content = "Nama: " + feature.properties.name + "<br>" +
                     "Deskripsi: " + feature.properties.description + "<br>" +
-                    "Dibuat: " + feature.properties.created_at + "<br>" +
-                    "<img src='{{ asset('storage/images/') }}/" + feature.properties.image + "' alt='' class='img-thumbnail' width='400'>"
+                    "Dibuat:" + feature.properties.created_at + "<br>" +
+                    "<br><img src='{{ asset('storage/images') }}/" +
+                    feature.properties.image + "' style='max-width:100%; height:auto;'>" +
+                    "<br><br>" +
+                    "<form action='"+routedelete+"' method='post'>" +'@csrf' +'@method("delete")' +
+                    "<button type='submit' class='btn btn-sm btn-danger' tittle='Delete Feature' onclick='return confirm (`Apakah Anda yakin ingin menghapus points ini?`)'><i class='fa-solid fa-trash'></i></button>" +
+                    "</form>"
 
-                ;
+                    ;
 
                 layer.on({
                     click: function(e) {
@@ -286,12 +292,18 @@
 
             // onEachFeature
             onEachFeature: function(feature, layer) {
+                //Route delete polylines
+                var routedelete = "{{ route('polylines.delete', ':id') }}"; routedelete = routedelete.replace(':id', feature.properties.id);
                 // variable popup content
                 var popup_content =
                     "Nama: " + feature.properties.name + "<br>" +
                     "Deskripsi: " + feature.properties.description + "<br>" +
                     "Dibuat: " + feature.properties.created_at + "<br>" +
-                    "<img src='{{ asset('storage/images/') }}/" + feature.properties.image + "' alt='' class='img-thumbnail' width='400'>"
+                    "<img src='{{ asset('storage/images/') }}/" + feature.properties.image + "' alt='' class='img-thumbnail' width='400'>" +
+                    "<br><br>" +
+                    "<form action='"+routedelete+"' method='post'>" +'@csrf' +'@method("delete")' +
+                    "<button type='submit' class='btn btn-sm btn-danger' tittle='Delete Feature' onclick='return confirm (`Apakah Anda yakin ingin menghapus polylines ini?`)'><i class='fa-solid fa-trash'></i></button>" +
+                    "</form>"
 
                 ;
 
@@ -316,12 +328,18 @@
 
             // onEachFeature
             onEachFeature: function(feature, layer) {
+                //Route delete polygons
+                var routedelete = "{{ route('polygons.delete', ':id') }}"; routedelete = routedelete.replace(':id', feature.properties.id);
                 // variable popup content
                 var popup_content =
                     "Nama: " + feature.properties.name + "<br>" +
                     "Deskripsi: " + feature.properties.description + "<br>" +
                     "Dibuat: " + feature.properties.created_at + "<br>" +
-                    "<img src='{{ asset('storage/images/') }}/" + feature.properties.image + "' alt='' class='img-thumbnail' width='400'>"
+                    "<img src='{{ asset('storage/images/') }}/" + feature.properties.image + "' alt='' class='img-thumbnail' width='400'>" +
+                    "<br><br>" +
+                    "<form action='"+routedelete+"' method='post'>" +'@csrf' +'@method("delete")' +
+                    "<button type='submit' class='btn btn-sm btn-danger' tittle='Delete Feature' onclick='return confirm (`Apakah Anda yakin ingin menghapus polygons ini?`)'><i class='fa-solid fa-trash'></i></button>" +
+                    "</form>"
 
                 ;
 

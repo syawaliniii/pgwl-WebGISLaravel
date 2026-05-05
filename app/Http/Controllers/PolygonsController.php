@@ -10,7 +10,7 @@ class PolygonsController extends Controller
     // Fungsi untuk mengkoneksikan model ke controller
     public function __construct()
     {
-        $this->polygon = new polygonsModel();
+        $this->polygons = new polygonsModel();
     }
     /**
      * Display a listing of the resource.
@@ -77,7 +77,7 @@ class PolygonsController extends Controller
         ];
 
         // Simpan data ke database
-        if (!$this->polygon->create($data)) {
+        if (!$this->polygons->create($data)) {
             return redirect()->route('peta')->with('error', 'Terjadi kesalahan saat menyimpan data.');
         };
 
@@ -114,6 +114,25 @@ class PolygonsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // mencari nama file gambar berdasarkan ID polygons
+        $image = $this->polygons->find($id)->image;
+
+       // Hapus dari data database
+        if (!$this->polygons->destroy($id)) {
+            return redirect()->route('peta')->with('error', 'Gagal menghapus data polygons.');
+        }
+        ;
+
+        // Hapus file gambar jika ada
+        if ($image != null) {
+            // cek apakah file gambar ada sebelum menghapus
+            if (file_exists('storage/images/' . $image)) {
+            // hapus file gambar
+                unlink('storage/images/' . $image);
+            }
+        }
+
+        //kembali ke halaman peta setelah menghapus data polygons
+        return redirect()->route('peta')->with('success', 'Data polygons berhasil dihapus.');
     }
 }
